@@ -9,3 +9,28 @@
 body {
   font-family: 'Roboto';
 }
+
+.all {
+  background: url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=valentin-muller-bWtd1ZyEy6w-unsplash.jpg&w=1920');
+  background-repeat: no-repeat;
+  background-size: auto;
+  min-height: 100vh;
+  backdrop-filter: blur(10px);
+}
+
+.glass-card {
+  height: 245px;
+  backdrop-filter: blur(6px) saturate(200%);
+  -webkit-backdrop-filter: blur(6px) saturate(200%);
+  background-color: rgba(255, 255, 255, 0.37);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.card-reminder, .card-link {
+  height: 184px;
+}
+
+.card-coins, .card-calender {
+  height: 374px;
+}

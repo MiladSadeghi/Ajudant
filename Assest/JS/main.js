@@ -4,22 +4,22 @@ nowTemp = document.querySelector('#now-temp'),
 clientLocation = document.querySelector('#location'),
 wind = document.querySelector('#wind'),
 humidity = document.querySelector('#humidity'),
-days = document.querySelector('#days')
-
+days = document.querySelector('#days'),
+nowTime = new Date()
+time = document.querySelector('#time').innerHTML = `${nowTime.getHours()}:${nowTime.getMinutes()}`
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  showWeatherAndTime(getAPIForWeatherAndTime());
+  showWeather(getAPIWeather());
 });
 
-async function getAPIForWeatherAndTime() {
+async function getAPIWeather() {
   const API = `https://api.weatherapi.com/v1/forecast.json?key=46857ae4038f4fe5862172715211709&q=${client.substring(client.indexOf("/"))}&days=5&aqi=yes&alerts=yes#`,
     response = await fetch(API),
     result = await response.json()
-
   return result;
 }
 
-function showWeatherAndTime(result) {
+function showWeather(result) {
   result.then((e) => {
     console.log(e);
     currentWeatherImage.src = 'https:' + e.current.condition.icon

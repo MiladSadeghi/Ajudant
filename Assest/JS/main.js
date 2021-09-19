@@ -5,11 +5,15 @@ clientLocation = document.querySelector('#location'),
 wind = document.querySelector('#wind'),
 humidity = document.querySelector('#humidity'),
 days = document.querySelector('#days'),
-nowTime = new Date()
-time = document.querySelector('#time').innerHTML = `${nowTime.getHours()}:${nowTime.getMinutes()}`
+nowTime = new Date(),
+time = document.querySelector('#time').innerHTML = `${nowTime.getHours()}:${nowTime.getMinutes()}`,
+newsImage = document.querySelector('#news-image'),
+newsTitle = document.querySelector('#news-title'),
+newsLink = document.querySelector('#news-link')
 
 document.addEventListener("DOMContentLoaded", (e) => {
   showWeather(getAPIWeather());
+  showNews(getAPINews())
 });
 
 async function getAPIWeather() {
@@ -18,17 +22,21 @@ async function getAPIWeather() {
     result = await response.json()
   return result;
 }
+async function getAPINews() {
+  const API = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=iHHz7cXFCauPssGKSsmrNGArxffKRY76`,
+    response = await fetch(API),
+    result = await response.json()
+  return result;
+}
 
 function showWeather(result) {
   result.then((e) => {
-    console.log(e);
     currentWeatherImage.src = 'https:' + e.current.condition.icon
     nowTemp.innerHTML = e.current.feelslike_c
     clientLocation.innerHTML = `${e.location.name} ${e.location.country}`
     wind.innerHTML = `Wind ${e.current.wind_kph} km/h`
     humidity.innerHTML = `Humidity ${e.current.humidity} %`
     e.forecast.forecastday.forEach((element, index) => {
-      console.log(element);
       days.innerHTML += `
       <div class="col-4 d-flex align-items-center justify-content-center">
         <div class="image-weath">
@@ -42,4 +50,15 @@ function showWeather(result) {
       `
     })
   });
+}
+
+function showNews(result) {
+  let randomArticle = Math.floor(Math.random() * 10)
+  result.then(e => {
+    newsImage.src = 'https://nyt.com/' + e.response.docs[randomArticle].multimedia[2].url
+    newsTitle.innerText = e.response.docs[randomArticle].headline.main
+    newsLink.href = e.response.docs[randomArticle].web_url
+
+  })
+  
 }

@@ -10,6 +10,10 @@ body {
   font-family: 'Roboto' !important;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .all {
   background: url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=valentin-muller-bWtd1ZyEy6w-unsplash.jpg&w=1920');
   background-repeat: no-repeat;
@@ -40,4 +44,17 @@ body {
 }
 .min {
   color: #0027b9;
+}
+
+.news-image img {
+  width: 277px;
+  height: 185px;
+  border-top-left-radius: 11px !important;
+  border-top-right-radius: 11px !important;
+  border-radius: 15px;
+}
+
+a:focus,a:active, a:hover {
+  outline: none !important;
+  box-shadow: none;
 }

@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Roboto';
+  font-family: 'Roboto' !important;
 }
 
 .all {
@@ -28,9 +28,16 @@ body {
 }
 
 .card-reminder, .card-link {
-  height: 184px;
+  height: 183px;
 }
 
 .card-coins, .card-calender {
   height: 374px;
+}
+
+.max {
+  color: #c00000;
+}
+.min {
+  color: #0027b9;
 }

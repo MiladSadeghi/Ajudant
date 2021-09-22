@@ -10,13 +10,34 @@ time = document.querySelector('#time').innerHTML = `${nowTime.getHours()}:${nowT
 newsImage = document.querySelector('#news-image'),
 newsTitle = document.querySelector('#news-title'),
 newsLink = document.querySelector('#news-link'),
-cardCoins = document.querySelector('.card-coins')
+cardCoins = document.querySelector('.card-coins'),
+reminderContent = document.querySelector('#reminder-content'),
+reminderEvent = document.querySelector('.reminder-event'),
+reminderInput = document.querySelector('.reminder-input')
 
 document.addEventListener("DOMContentLoaded", (e) => {
   showWeather(getAPIWeather());
   showNews(getAPINews())
   showCoins(getAPICoins())
+  eventListeners()
+  reminder.addEventListener('click', showReminder)
+  
 });
+
+function eventListeners() {
+  document.querySelector('#reminder').addEventListener('click', ()=> reminderEvent.style.display = 'block')
+  document.querySelector('#basic-addon1').addEventListener('click', ()=> {
+    if (reminderInput.value.length > 0) {
+      reminderContent.innerHTML = `
+        <h3 class="fs-5 fw-bold text-white">${reminderInput.value}</h3>
+      `
+      reminderEvent.style.display = 'none'
+    }
+  })
+  document.querySelector('#close').addEventListener('click', () => {
+    reminderEvent.style.display = 'none'
+  }) 
+}
 
 async function getAPIWeather() {
   const API = `https://api.weatherapi.com/v1/forecast.json?key=46857ae4038f4fe5862172715211709&q=${client.substring(client.indexOf("/"))}&days=5&aqi=yes&alerts=yes#`,
@@ -71,8 +92,7 @@ function showNews(result) {
 
 function showCoins(result) {
   result.then(e => {
-    e.forEach((element, index) => {
-      console.log(element.market_cap_rank);
+    e.forEach(element => {
       cardCoins.innerHTML += `
         <div class="coins d-flex w-50 align-items-center justify-content-evenly" data-bs-placement="bottom" data-bs-container="body" title="${element.market_cap_rank}- ${element.name}">
           <img src="${element.image.replace('large','small')}">

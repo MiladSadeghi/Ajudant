@@ -76,3 +76,34 @@ a:focus,a:active, a:hover {
 .red {
   color: #ff0909;
 }
+
+.add {
+  right: 23px;
+  top: 17px;
+  cursor: pointer;
+}
+
+.reminder-event {
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,1) 50%, rgba(255,255,255,0) 100%);
+  padding: 28px 0 81px;
+  display: none;
+}
+
+.reminder-input {
+  width: 80%;
+  height: 40px;
+  outline: none;
+  border: none;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+
+.bi-x-lg {
+  right: 0;
+  right: 33px;
+  top: 14px;
+  color: #fff;
+  cursor: pointer;
+}

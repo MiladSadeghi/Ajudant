@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
   showNews(getAPINews())
   showCoins(getAPICoins())
   eventListeners()
+  loadFromLocalStorage()
+
+  if(getFromLocalStorage('reminder').length !== 0) {
+    reminderContent.innerHTML = `
+      <h2 class="fs-5 fw-bold text-white">${getFromLocalStorage('reminder')[1]}</h2>
+    `
+  }
 });
 
 function eventListeners() {
@@ -123,6 +130,7 @@ function showMiddle(result) {
   if (reminderInput.value.length > 0) {
     switch (result) {
       case 'reminder':
+          localStorage.setItem('reminder', JSON.stringify([1, reminderInput.value]))
           reminderContent.innerHTML = `
             <h2 class="fs-5 fw-bold text-white">${reminderInput.value}</h2>
           `
@@ -130,29 +138,78 @@ function showMiddle(result) {
           document.querySelector('.card-reminder-content h3').style.display = 'none'
         break;
       case 'link':
+        let i = 0;
         reminderInput.placeholder = 'e.g. https://google.com'
           getTitle(reminderInput.value).then(e => {
             if(linkContent.childElementCount <= 3) {
+              addtoLocalStorage('link', [e ,reminderInput.value])
               linkContent.innerHTML += `
-              <div class="px-4 my-2 d-flex link-link">
+              <div class="px-4 my-2 d-flex justify-content-between link-link">
                 <a title="${e}" class="text-white text-decoration-underline" href="${reminderInput.value}">${e}</a>
                 <span><i class="link-remove bi bi-dash-lg"></i></span>
               </div>
               `
             }
-            document.querySelectorAll('.link-link').forEach(e => {
-              e.addEventListener('click', e => {
-                if (e.target.classList.contains('link-remove')) {
-                  e.target.parentElement.parentElement.remove()
-                  console.log(linkContent.childElementCount);
-                  if(linkContent.childElementCount === 1) {document.querySelector('.card-link-content h3').style.display = 'block'}
-                }
-              })
-            })
+            removeLink()
           });
         reminderEvent.style.display = 'none'
         document.querySelector('.card-link-content h3').style.display = 'none'
       break;
     }
   }
+}
+
+function removeLink() {
+  document.querySelectorAll('.link-link').forEach(e => {
+    e.addEventListener('click', e => {
+      if (e.target.classList.contains('link-remove')) {
+        removeFromLS('link', e.target.parentElement.parentElement.children[0].href)
+        e.target.parentElement.parentElement.remove()
+        if(linkContent.childElementCount === 1) {document.querySelector('.card-link-content h3').style.display = 'block'}
+      }
+    })
+  })
+}
+
+function addtoLocalStorage(key,value) {
+  let getLocal = getFromLocalStorage(key)
+  getLocal.push(value)
+  localStorage.setItem(key, JSON.stringify(getLocal))
+}
+
+function getFromLocalStorage(key) {
+  let keyList;
+  if (localStorage.getItem(key)) {
+    keyList = JSON.parse(localStorage.getItem(key))
+  } else {
+    keyList = []
+  }
+  return keyList
+}
+
+function removeFromLS(key, link) {
+  let getFromLS = getFromLocalStorage(key)
+  for (let i = 0; i <= getFromLS.length; i++) {
+    if(getFromLS[i][1] == link) {
+      getFromLS.splice(i, 1)
+      break
+    }
+  }
+  if(getFromLS.length === 0) {localStorage.removeItem(key)} else {
+    localStorage.setItem(key, JSON.stringify(getFromLS))
+  }
+}
+
+function loadFromLocalStorage() {
+  let keyList = getFromLocalStorage('link')
+  if(keyList.length !== 0) {document.querySelector('.card-link-content h3').style.display = 'none'}
+  keyList.forEach(function(key) {
+    linkContent.innerHTML += `
+      <div class="px-4 my-2 d-flex justify-content-between link-link">
+        <a title="${key[0]}" class="text-white text-decoration-underline" href="${key[1]}">${key[0]}</a>
+        <span><i class="link-remove bi bi-dash-lg"></i></span>
+      </div>
+    `
+  });
+  removeLink()
 }

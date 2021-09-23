@@ -13,27 +13,34 @@ newsLink = document.querySelector('#news-link'),
 cardCoins = document.querySelector('.card-coins'),
 reminderContent = document.querySelector('#reminder-content'),
 reminderEvent = document.querySelector('.reminder-event'),
-reminderInput = document.querySelector('.reminder-input')
+reminderInput = document.querySelector('.reminder-input'),
+linkContent = document.querySelector('#link-content'),
+linkTips = document.querySelector('#link-tips')
 
 document.addEventListener("DOMContentLoaded", (e) => {
   showWeather(getAPIWeather());
   showNews(getAPINews())
   showCoins(getAPICoins())
   eventListeners()
-  reminder.addEventListener('click', showReminder)
-  
 });
 
 function eventListeners() {
-  document.querySelector('#reminder').addEventListener('click', ()=> reminderEvent.style.display = 'block')
-  document.querySelector('#basic-addon1').addEventListener('click', ()=> {
-    if (reminderInput.value.length > 0) {
-      reminderContent.innerHTML = `
-        <h3 class="fs-5 fw-bold text-white">${reminderInput.value}</h3>
-      `
-      reminderEvent.style.display = 'none'
-    }
+  document.querySelector('#reminder-add').addEventListener('click', ()=> {
+    reminderEvent.style.display = 'block';
+    document.querySelector('#search').setAttribute('event', 'reminder');
+    reminderInput.placeholder = 'e.g. buy pill';
   })
+
+  document.querySelector('#link-add ').addEventListener('click', ()=> {
+    reminderEvent.style.display = 'block';
+    document.querySelector('#search').setAttribute('event', 'link');
+    reminderInput.placeholder = 'e.g. https://google.com';
+  })
+
+  document.querySelector('#search').addEventListener('click', (e)=> {
+    showMiddle(e.target.getAttribute('event'))
+  }, true)
+
   document.querySelector('#close').addEventListener('click', () => {
     reminderEvent.style.display = 'none'
   }) 
@@ -57,6 +64,11 @@ async function getAPICoins() {
     result = await response.json()
   return result;
 }
+async function getTitle(url) {
+  const fetchAPI = await fetch(`https://textance.herokuapp.com/rest/title/${url}`,{method: "GET", headers: {'Content-Type': 'text/plain'}})
+  const result = await fetchAPI.text()
+  return result
+}
 
 function showWeather(result) {
   result.then((e) => {
@@ -65,7 +77,7 @@ function showWeather(result) {
     clientLocation.innerHTML = `${e.location.name} ${e.location.country}`
     wind.innerHTML = `Wind ${e.current.wind_kph} km/h`
     humidity.innerHTML = `Humidity ${e.current.humidity} %`
-    e.forecast.forecastday.forEach((element, index) => {
+    e.forecast.forecastday.forEach(element => {
       days.innerHTML += `
       <div class="col-4 d-flex align-items-center justify-content-center">
         <div class="image-weath">
@@ -105,4 +117,42 @@ function showCoins(result) {
       new bootstrap.Tooltip(element)
     });
   })
+}
+
+function showMiddle(result) {
+  if (reminderInput.value.length > 0) {
+    switch (result) {
+      case 'reminder':
+          reminderContent.innerHTML = `
+            <h2 class="fs-5 fw-bold text-white">${reminderInput.value}</h2>
+          `
+          reminderEvent.style.display = 'none'
+          document.querySelector('.card-reminder-content h3').style.display = 'none'
+        break;
+      case 'link':
+        reminderInput.placeholder = 'e.g. https://google.com'
+          getTitle(reminderInput.value).then(e => {
+            if(linkContent.childElementCount <= 3) {
+              linkContent.innerHTML += `
+              <div class="px-4 my-2 d-flex link-link">
+                <a title="${e}" class="text-white text-decoration-underline" href="${reminderInput.value}">${e}</a>
+                <span><i class="link-remove bi bi-dash-lg"></i></span>
+              </div>
+              `
+            }
+            document.querySelectorAll('.link-link').forEach(e => {
+              e.addEventListener('click', e => {
+                if (e.target.classList.contains('link-remove')) {
+                  e.target.parentElement.parentElement.remove()
+                  console.log(linkContent.childElementCount);
+                  if(linkContent.childElementCount === 1) {document.querySelector('.card-link-content h3').style.display = 'block'}
+                }
+              })
+            })
+          });
+        reminderEvent.style.display = 'none'
+        document.querySelector('.card-link-content h3').style.display = 'none'
+      break;
+    }
+  }
 }

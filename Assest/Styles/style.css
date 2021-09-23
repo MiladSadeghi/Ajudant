@@ -107,3 +107,19 @@ a:focus,a:active, a:hover {
   color: #fff;
   cursor: pointer;
 }
+
+.input-group-text {
+  cursor: pointer;
+}
+
+.card-link-content a {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link-remove {
+  cursor: pointer;
+}

@@ -72,7 +72,7 @@ async function getAPICoins() {
   return result;
 }
 async function getTitle(url) {
-  const fetchAPI = await fetch(`https://textance.herokuapp.com/rest/title/${url}`,{method: "GET", headers: {'Content-Type': 'text/plain'}})
+  const fetchAPI = await fetch(`https://textance.herokuapp.com/rest/title/${url}`,{method: "GET", mode:"no-cors",headers: {'Content-Type': 'text/plain'}})
   const result = await fetchAPI.text()
   return result
 }
@@ -86,7 +86,7 @@ function showWeather(result) {
     humidity.innerHTML = `Humidity ${e.current.humidity} %`
     e.forecast.forecastday.forEach(element => {
       days.innerHTML += `
-      <div class="col-4 d-flex align-items-center justify-content-center">
+      <div class="col-4 d-flex align-items-center justify-content-center flex-column flex-md-row">
         <div class="image-weath">
           <img src="https:${element.day.condition.icon}">
         </div>
@@ -113,7 +113,7 @@ function showCoins(result) {
   result.then(e => {
     e.forEach(element => {
       cardCoins.innerHTML += `
-        <div class="coins d-flex w-50 align-items-center justify-content-evenly" data-bs-placement="bottom" data-bs-container="body" title="${element.market_cap_rank}- ${element.name}">
+        <div class="coins d-flex w- m-1 m-lg-0 align-items-center justify-content-evenly" data-bs-placement="bottom" data-bs-container="body" title="${element.market_cap_rank}- ${element.name}">
           <img src="${element.image.replace('large','small')}">
           <p class=" fw-bold fs-5 ${(Math.sign(element.price_change_percentage_24h) === -1)? 'red':'green'}">${element.price_change_percentage_24h.toFixed(4)}%</p>
         </div>

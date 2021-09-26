@@ -12,9 +12,9 @@
 </head>
 <body>
   <section class="all position-relative">
-    <div class="container p-0 py-3">
+    <div class="container py-3">
       <div class="row gx-2">
-        <div class="col-6 mt-0">
+        <div class="col-12 col-lg-6 mt-0">
           <div class="glass-card p-4 d-flex flex-column justify-content-between">
             <div class="row">
               <div class="col-4 d-flex flex-column align-items-center">
@@ -23,32 +23,32 @@
                   <span id="now-temp" class="fs-4 fw-bold text-white"></span>
                 </div>
                 <div class="text-end">
-                  <span class="fw-light fs-5 text-white" id="location"></span>
+                  <span class="fw-light text-white font-1" id="location"></span>
                 </div>
               </div>
               <div class="col-4 d-flex align-items-center justify-content-center">
-                <span id="wind" class="text-white fs-5 fw-light"></span>
+                <span id="wind" class="text-white fw-light font-1"></span>
               </div>
               <div class="col-4 d-flex align-items-center justify-content-center">
-                <span id="humidity" class="text-white fs-5 fw-light"></span>
+                <span id="humidity" class="text-white fw-light font-1"></span>
               </div>
             </div>
             <div class="row" id="days">
             </div>
           </div>
         </div>
-        <div class="col-3 mt-0">
+        <div class="col-lg-3 col-md-6 gy-2 col-12 gy-lg-0">
           <div class="glass-card d-flex flex-column justify-content-center align-items-center">
             <span class="fs-1 fw-bold text-white" id="time"></span>
           </div>
         </div>
-        <div class="col-3 mt-0">
-          <div class="glass-card d-flex">
+        <div class="col-lg-3 col-md-6 col-12 gy-2 gy-lg-0">
+          <div class="glass-card d-flex justify-content-center">
             <a id="news-link" target="_blank" class="d-flex flex-column text-white">
-              <div class="news-image">
+              <div class="news-image h-75 w-100">
                 <img id="news-image" src="" alt="">
               </div>
-              <div class="news-content h-100 d-flex align-items-center justify-content-center">
+              <div class="news-content h-25 d-flex align-items-center justify-content-center">
                 <h3 class="fs-6 fw-normal text-center" id="news-title"></h3>
               </div>
             </a>
@@ -56,14 +56,14 @@
         </div>
       </div>
       <div class="row gx-2 mt-2">
-        <div class="col-4 mt-0">
+        <div id="calender" class="col-md-4 col-12 mt-0">
           <div class="glass-card card-calender"></div>
         </div>
-        <div class="col-4 mt-0">
+        <div class="col-12 col-md-4 mt-md-0 mt-2">
           <div class="glass-card card-reminder position-relative d-flex align-items-center justify-content-center">
             <div id="reminder-add" class="add position-absolute"><i class="bi bi-plus-lg"></i></div>
             <div id="reminder-content" class="card-reminder-content">
-              <h3 class="fs-5 fw-bold">No reminders found.</h3>
+              <h3 class="fs-5 fw-bold text-center">No reminders found.</h3>
             </div>
           </div>
           <div id="link" class="glass-card card-link mt-2 d-flex align-items-center justify-content-center">
@@ -73,8 +73,8 @@
             </div>
           </div>
         </div>
-        <div class="col-4 mt-0">
-          <div class="glass-card card-coins d-flex flex-wrap"></div>
+        <div id="coins" class="col-md-4 col-12 mt-md-0 mt-2">
+          <div class="glass-card card-coins d-flex flex-wrap align-items-center justify-content-center flex-lg-row flex-column"></div>
         </div>
       </div>
     </div>

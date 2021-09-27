@@ -15,7 +15,8 @@ reminderContent = document.querySelector('#reminder-content'),
 reminderEvent = document.querySelector('.reminder-event'),
 reminderInput = document.querySelector('.reminder-input'),
 linkContent = document.querySelector('#link-content'),
-linkTips = document.querySelector('#link-tips')
+linkTips = document.querySelector('#link-tips'),
+date = document.querySelector('#date')
 
 document.addEventListener("DOMContentLoaded", (e) => {
   showWeather(getAPIWeather());
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   showCoins(getAPICoins())
   eventListeners()
   loadFromLocalStorage()
+  showCalender()
 
   if(getFromLocalStorage('reminder').length !== 0) {
     reminderContent.innerHTML = `
@@ -143,6 +145,7 @@ function showMiddle(result) {
           getTitle(reminderInput.value).then(e => {
             if(linkContent.childElementCount <= 3) {
               addtoLocalStorage('link', [e ,reminderInput.value])
+              console.log(e);
               linkContent.innerHTML += `
               <div class="px-4 my-2 d-flex justify-content-between link-link">
                 <a title="${e}" class="text-white text-decoration-underline" href="${reminderInput.value}">${e}</a>
@@ -157,6 +160,25 @@ function showMiddle(result) {
       break;
     }
   }
+}
+
+function showCalender() {
+  let winHeight = document.querySelector('#calender').clientHeight,
+  height = ( winHeight * 15.7 ) / 100,
+  lineHeight = height + "px";
+  console.log(nowTime);
+  date.innerHTML = nowTime.toGMTString().substring(0,16)
+  document.querySelectorAll('li').forEach(element => {
+    element.style.lineHeight = lineHeight
+    element.style.height = height
+    if(element.textContent < nowTime.getDate()) {
+      element.classList.add('before')
+    }
+    if(nowTime.getDate() === Number(element.textContent)) {
+      console.log(element);
+      element.classList.add('today')
+    }
+  });
 }
 
 function removeLink() {

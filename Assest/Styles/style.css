@@ -137,6 +137,46 @@ a:focus,a:active, a:hover {
   width: 50%;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden; 
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  float: left;
+  display: block;
+  width: 14.2857%;
+  text-align: center;
+  list-style-type: none;
+}
+
+li:nth-child(n+1):nth-child(-n+7) {
+  font-weight: 900;
+  color: #e67e22;
+  line-height: normal !important;
+}
+
+.before {
+  font-weight: 900;
+  color: rgba(0,0,0,.3);
+}
+
+.today {
+  border-radius: 5px;
+  background-color: #1abc9c;
+  color: #ecf0f1;
+}
+
 @media screen and (max-width: 991.98px) {
   .coins {
     width: 100%;
